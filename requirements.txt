@@ -1,3 +1,3 @@
-git+https://github.com/dangoth/bot.py@rewrite
+git+https://github.com/dangoth/discordbot.py@rewrite
 discord.ext.commands
 discord.ext
