@@ -1,0 +1,3 @@
+git+https://github.com/dangoth/bot.py@rewrite
+discord.ext.commands
+discord.ext
