@@ -7,6 +7,7 @@ import requests
 from discord.ext.commands import Bot
 import random
 from discord.ext import commands
+import openai
 
 import discord
 from dotenv import load_dotenv
@@ -14,6 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 WLTOKEN = os.getenv('WARCRAFTLOGS_API_KEY')
+openai.api_key = os.getenv('OPENAI_TOKEN')
 
 
 client = Bot(command_prefix='!')
@@ -95,6 +97,19 @@ async def weather(ctx, message):
     weather = data["weather"][0]["description"]
     temp = data["main"]["temp"]
     await ctx.send(f"Current weather for {city} is {weather} with a temperature of {round(temp)} degrees celsius")
+
+@client.command()
+async def openai(ctx, message):
+    response = openai.Completion.create(
+        model="text-davinci-002",
+        prompt=f"{message}",
+        temperature=1,
+        max_tokens=547,
+        top_p=1,
+        frequency_penalty=0.97,
+        presence_penalty=1.35
+    )
+    await ctx.send(response)
 
 @client.command()
 async def logs(ctx, name, server = "nagrand", role="dps"):
